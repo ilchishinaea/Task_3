@@ -2,6 +2,7 @@ package pageObjectModels;
 
 import io.qameta.allure.Step;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 @Getter
+@NoArgsConstructor
 public class BasePage {
 
     private WebDriver driver;
@@ -25,6 +27,8 @@ public class BasePage {
     private final By buttonConstructor = By.xpath(".//*[text() = 'Конструктор']");
     //кнопка логотип
     private final By buttonLogo = By.className("AppHeader_header__logo__2D0X2");
+    //заголовок "Соберите бургер"
+    private final By headerCollectBurger = By.xpath(".//*[text() = 'Соберите бургер']");
     //кнопка "Булки"
     private final By buttonBuns = By.xpath(".//*[text() = 'Булки']");
     //кнопка "Соусы"
@@ -50,7 +54,7 @@ public class BasePage {
         driver.findElement(locator).click();
     }
 
-    @Step("Заполнить поле: {locator} значением: {value}")
+    //вспомогательный метод для классов наследников
     public void setInputStep(By locator, String value){
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(value);

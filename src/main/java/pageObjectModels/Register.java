@@ -1,10 +1,14 @@
 package pageObjectModels;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pojoModels.User;
 
 @Getter
+@NoArgsConstructor
 public class Register extends BasePage {
 
     public Register(WebDriver driver) {
@@ -26,4 +30,14 @@ public class Register extends BasePage {
     //ошибка "Некорректный пароль"
     private final By errorText = By.xpath(".//*[text() = 'Некорректный пароль']");
 
+
+    //------------ действия ------------//
+
+    @Step("Заполнить поля для регистрации данными и нажать на 'Зарегистрироваться': {user} ")
+    public void setInputForRegisterAndClickButtonRegisterStep(User user){
+        setInputStep(getInputName(), user.getName());
+        setInputStep(getInputEmail(), user.getEmail());
+        setInputStep(getInputPassword(), user.getPassword());
+        clickButtonStep(getButtonRegister());
+    }
 }

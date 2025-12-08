@@ -20,6 +20,7 @@ public class WebDriverFactory {
             case "chrome":
                 break;
             case "yandex":
+                System.setProperty("webdriver.chrome.driver", "C:\\Users\\Katya\\yandex\\yandexdriver.exe");
                 options.setBinary("C:\\Users\\Katya\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe");
                 break;
             default:

@@ -1,6 +1,7 @@
 package tests;
 
 import baseTest.BaseTest;
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +23,7 @@ public class RegisterTest extends BaseTest {
 
     @BeforeEach
     public void initModels(){
+        Allure.step("Открыть ЛК и нажать на 'Зарегистрироваться'", () -> {
         login = new Login(driver);
         register = new Register(driver);
 
@@ -29,19 +31,14 @@ public class RegisterTest extends BaseTest {
         login.waitForVisibleStep(login.getHeaderEntrance());
         login.clickButtonStep(login.getButtonRegister());
         register.waitForVisibleStep(register.getHeaderRegister());
+        });
     }
 
     @Test
     @DisplayName("Успешная регистрация")
     public void registerValidUserSuccess(){
         user = randomValidUserStep();
-
-        register.setInputStep(register.getInputName(), user.getName());
-        register.setInputStep(register.getInputEmail(), user.getEmail());
-        register.setInputStep(register.getInputPassword(), user.getPassword());
-
-        register.clickButtonStep(register.getButtonRegister());
-
+        register.setInputForRegisterAndClickButtonRegisterStep(user);
         login.waitForVisibleStep(login.getHeaderEntrance());
     }
 
@@ -49,13 +46,7 @@ public class RegisterTest extends BaseTest {
     @DisplayName("Неуспешная регистрация - ошибка для некорректного пароля")
     public void registerUserWithInvalidPassFail(){
         user = randomUserWithInvalidPassStep();
-
-        register.setInputStep(register.getInputName(), user.getName());
-        register.setInputStep(register.getInputEmail(), user.getEmail());
-        register.setInputStep(register.getInputPassword(), user.getPassword());
-
-        register.clickButtonStep(register.getButtonRegister());
-
+        register.setInputForRegisterAndClickButtonRegisterStep(user);
         register.waitForVisibleStep(register.getErrorText());
     }
 

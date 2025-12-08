@@ -1,13 +1,34 @@
 package utils;
 
 import io.qameta.allure.Step;
+import org.junit.jupiter.params.provider.Arguments;
+import pageObjectModels.Login;
 import pojoModels.User;
-
 import java.util.UUID;
+import java.util.stream.Stream;
+import pageObjectModels.BasePage;
 
 public class DataGeneratorUsers {
 
     //------------ действия ------------//
+
+    @Step("Переход в конструктор")
+    public static Stream<Arguments> goToConstructorData(){
+        Login login = new Login();
+        return Stream.of(
+                Arguments.of(login.getButtonConstructor()),
+                Arguments.of(login.getButtonLogo())
+        );
+    }
+
+    @Step("Переход к разделу конструктора")
+    public static Stream<Arguments> sectionConstructorData(){
+        BasePage basePage = new BasePage();
+        return Stream.of(
+                Arguments.of(basePage.getButtonFillings(), basePage.getSomeFilling()),
+                Arguments.of(basePage.getButtonSauces(), basePage.getSomeSauce())
+        );
+    }
 
     @Step("Инициализация валидного рандомного юзера c почтой, паролем и именем")
     public static User randomValidUserStep(){

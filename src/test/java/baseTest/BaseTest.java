@@ -1,5 +1,6 @@
 package baseTest;
 
+import io.qameta.allure.Allure;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,9 @@ public class BaseTest {
 
     @BeforeEach
     public void setUp() {
-        String browser = System.getProperty("browser", "chrome"); // дефолт
+        String browser = System.getProperty("browser", "chrome"); // chrome дефолт
+
+        Allure.step("Открыть домашнюю страницу 'stellar burgers' в браузере: " + browser, () -> {
         driver = WebDriverFactory.createDriver(browser);
         driver.manage().window().maximize();
         driver.get(SERVER);
@@ -28,13 +31,15 @@ public class BaseTest {
         basePage.waitForVisibleStep(basePage.getButtonLogo());
 
         RestAssured.baseURI = SERVER;
-
+        });
     }
 
     @AfterEach
     public void tearDown() {
+        Allure.step("Закрыть браузер", () -> {
         if (driver != null) {
             driver.quit();
         }
+        });
     }
 }
