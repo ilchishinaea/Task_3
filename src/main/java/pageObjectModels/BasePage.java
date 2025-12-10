@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeContains;
+
 @Getter
 @NoArgsConstructor
 public class BasePage {
@@ -30,21 +32,15 @@ public class BasePage {
     //заголовок "Соберите бургер"
     private final By headerCollectBurger = By.xpath(".//*[text() = 'Соберите бургер']");
     //кнопка "Булки"
-    private final By buttonBuns = By.xpath(".//*[text() = 'Булки']");
+    private final By buttonBuns = By.xpath(".//div[count(*)=1 and span[text() = 'Булки']]");
     //кнопка "Соусы"
-    private final By buttonSauces = By.xpath(".//*[text() = 'Соусы']");
+    private final By buttonSauces = By.xpath(".//div[count(*)=1 and span[text() = 'Соусы']]");
     //кнопка "Начинки"
-    private final By buttonFillings = By.xpath(".//*[text() = 'Начинки']");
+    private final By buttonFillings = By.xpath(".//div[count(*)=1 and span[text() = 'Начинки']]");
     //кнопка "Войти в аккаунт"
     private final By buttonLoginToAcc = By.xpath(".//*[text() = 'Войти в аккаунт']");
     //кнопка "Оформить заказ"
     private final By buttonPlaceOrder = By.xpath(".//*[text() = 'Оформить заказ']");
-    //кнопка "Флюоресцентная булка R2-D3"
-    private final By someBun = By.xpath(".//*[text() = 'Флюоресцентная булка R2-D3']");
-    //кнопка "Соус Spicy-X"
-    private final By someSauce = By.xpath(".//*[text() = 'Соус Spicy-X']");
-    //кнопка "Мясо бессмертных моллюсков Protostomia"
-    private final By someFilling = By.xpath(".//*[text() = 'Мясо бессмертных моллюсков Protostomia']");
 
 
     //------------ действия ------------//
@@ -72,4 +68,21 @@ public class BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
+    @Step("Ожидание появления активного класса")
+    public void waitDisplayActiveClass(By locator){
+        wait.until(ExpectedConditions.attributeContains(
+                locator,
+                "class",
+                "tab_tab_type_current__2BEPc"
+        ));
+    }
+
+    @Step("Ожидание отсутсвтия активного класса")
+    public void waitNotDisplayActiveClass(By locator){
+        wait.until(ExpectedConditions.not(ExpectedConditions.attributeContains(
+                locator,
+                "class",
+                "tab_tab_type_current__2BEPc"
+        )));
+    }
 }

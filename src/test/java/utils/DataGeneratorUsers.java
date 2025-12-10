@@ -25,8 +25,8 @@ public class DataGeneratorUsers {
     public static Stream<Arguments> sectionConstructorData(){
         BasePage basePage = new BasePage();
         return Stream.of(
-                Arguments.of(basePage.getButtonFillings(), basePage.getSomeFilling()),
-                Arguments.of(basePage.getButtonSauces(), basePage.getSomeSauce())
+                Arguments.of(basePage.getButtonFillings()),
+                Arguments.of(basePage.getButtonSauces())
         );
     }
 

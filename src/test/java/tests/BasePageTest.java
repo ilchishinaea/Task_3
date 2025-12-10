@@ -35,19 +35,23 @@ public class BasePageTest extends BaseTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Переход к разделу: {locatorConstructorSection}")
+    @DisplayName("Таб по разделу: {locatorConstructorSection}")
     @MethodSource("utils.DataGeneratorUsers#sectionConstructorData")
-    public void goToConstructorSection(By locatorConstructorSection, By locatorExpect){
+    public void goToConstructorSection(By locatorConstructorSection){
+        basePage.waitNotDisplayActiveClass(locatorConstructorSection);
         basePage.clickButtonStep(locatorConstructorSection);
-        basePage.waitForVisibleStep(locatorExpect);
+        basePage.waitDisplayActiveClass(locatorConstructorSection);
     }
 
     @Test
-    @DisplayName("Переход к разделу: Булки")
+    @DisplayName("Таб по разделу: Булки")
     public void goToConstructorSectionBuns(){
+        By locatorButtonBuns = basePage.getButtonBuns();
         basePage.clickButtonStep(basePage.getButtonFillings());
-        basePage.clickButtonStep(basePage.getButtonBuns());
-        basePage.waitForVisibleStep(basePage.getSomeBun());
+        basePage.waitNotDisplayActiveClass(locatorButtonBuns);
+        basePage.waitForClickableStep(locatorButtonBuns);
+        basePage.clickButtonStep(locatorButtonBuns);
+        basePage.waitDisplayActiveClass(locatorButtonBuns);
     }
 
     @AfterEach
